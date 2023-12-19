@@ -5,5 +5,8 @@
   "description": "Advent of code day 2 part 2",
   "scripts": {
     "test": "npx tsx index.ts"
+  },
+  "dependencies": {
+    "tsx": "4.6.2"
   }
 }
