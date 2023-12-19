@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "@adventofcode/day2-part2",
+  "version": "0.1.0",
+  "description": "Advent of code day 2 part 2",
+  "scripts": {
+    "start": "npx tsx index.ts"
+  }
+}
