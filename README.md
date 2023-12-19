@@ -15,6 +15,15 @@ For instance, to run the first part of the second day, run the following command
 npm --workspace day2/part1 test input.txt
 ```
 
+## Tracks
+
+Day | Part | Finished
+---|---|---
+Day 1 | Part 1 | ✅
+Day 1 | Part 2 | ❌
+Day 2 | Part 1 | ✅
+Day 2 | Part 2 | ✅
+
 ## License
 
 See [`LICENSE`](./LICENSE).
