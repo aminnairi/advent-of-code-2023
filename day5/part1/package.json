@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "@adventofcode/day5-part1",
+  "version": "0.1.0",
+  "description": "Advent of code day 5 part 1",
+  "scripts": {
+    "test": "npx tsx index.ts"
+  },
+  "dependencies": {
+    "tsx": "4.6.2"
+  }
+}
