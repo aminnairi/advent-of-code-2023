@@ -1,3 +1,4 @@
+import * as Process from "process";
 import * as FileSystem from "fs/promises";
 
 const parseIntOr = (fallback: number, input: unknown): number => {
@@ -17,7 +18,13 @@ const parseIntOr = (fallback: number, input: unknown): number => {
 };
 
 const main = async () => {
-  const buffer: Buffer = await FileSystem.readFile("input.txt");
+  const path = Process.argv[2];
+
+  if (!path) {
+    throw new Error("A path must be provided\nexample: npm --workspace day1/part1 test input.txt");
+  }
+
+  const buffer: Buffer = await FileSystem.readFile(path);
 
   const text: string = buffer.toString();
 
@@ -64,13 +71,11 @@ const main = async () => {
     return parseIntOr(0, `${firstNumber}${lastNumber}`);
   });
 
-  const calibrations: number = linesWithCalibration.reduce((sum, calibration) => {
+  const solution: number = linesWithCalibration.reduce((sum, calibration) => {
     return sum + calibration;
   }, 0);
 
-  const output = String(calibrations);
-
-  await FileSystem.writeFile("output.txt", output);
+  console.log(solution);
 };
 
 main().catch(error => {

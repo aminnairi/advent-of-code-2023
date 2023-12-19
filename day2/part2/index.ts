@@ -1,3 +1,4 @@
+import * as Process from "process";
 import * as FileSystem from "fs/promises";
 
 interface CubeWithCountColor {
@@ -7,7 +8,13 @@ interface CubeWithCountColor {
 }
 
 const main = async () => {
-  const buffer = await FileSystem.readFile("./input.txt");
+  const path = Process.argv[2];
+
+  if (!path) {
+    throw new Error("A path must be provided\nexample: npm --workspace day2/part2 test input.txt");
+  }
+
+  const buffer = await FileSystem.readFile(path);
   const text = buffer.toString();
 
   const result = text.split("\n").filter(Boolean).map(line => {

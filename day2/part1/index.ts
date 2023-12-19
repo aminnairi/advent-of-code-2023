@@ -1,7 +1,14 @@
 import * as FileSystem from "fs/promises";
+import * as Process from "process";
 
 const main = async () => {
-  const buffer = await FileSystem.readFile("./input.txt");
+  const path = Process.argv[2];
+
+  if (!path) {
+    throw new Error("A path must be provided\nexample: npm --workspace day2/part1 test input.txt");
+  }
+
+  const buffer = await FileSystem.readFile(path);
   const text = buffer.toString();
 
   const expectations = {
