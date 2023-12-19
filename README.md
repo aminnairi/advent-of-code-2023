@@ -4,8 +4,8 @@ Advent of code 2023 solutions written in TypeScript
 
 ## Requirements
 
-- Node.js
-- NPM
+- [Node.js](https://nodejs.org/en)
+- [NPM](https://www.npmjs.com/)
 
 ## Usage
 
