@@ -1,5 +1,7 @@
 # advent-of-code-2023
 
+Advent of code 2023 solutions written in TypeScript
+
 ## Requirements
 
 - Node.js
