@@ -15,24 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-import * as Process from "process";
 import * as FileSystem from "fs/promises";
-
-const parseIntOr = (fallback: number, input: unknown): number => {
-  const parsedInt: number = (() => {
-    if (typeof input === "string") {
-      return parseInt(input, 10);
-    }
-
-    return parseInt(String(input), 10);
-  })();
-
-  if (Number.isNaN(parsedInt)) {
-    return fallback;
-  }
-
-  return parsedInt;
-};
+import * as Process from "process";
 
 const main = async () => {
   const path = Process.argv[2];
@@ -41,64 +25,71 @@ const main = async () => {
     throw new Error("A path must be provided\nexample: npm --workspace day1/part1 test input.txt");
   }
 
-  const buffer: Buffer = await FileSystem.readFile(path);
+  const digitsMap: Record<string, number> = {
+    "1": 1,
+    "2": 2,
+    "3": 3,
+    "4": 4,
+    "5": 5,
+    "6": 6,
+    "7": 7,
+    "8": 8,
+    "9": 9,
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9
+  };
+  
+  const digitsKeys = Object.keys(digitsMap);
 
-  const text: string = buffer.toString();
+  const buffer = await FileSystem.readFile(path);
 
-  const lines: Array<string> = text.split("\n");
+  const solution = buffer.toString().split("\n").filter(Boolean).map(line => {
+    const initialDigits: Array<number> = [];
+    const indices = Array.from(Array(line.length)).map((_, index) => index);
 
-  const linesWithoutEmptyLines = lines.filter(line => {
-    return line.trim().length !== 0;
-  });
+    return indices.reduce((digits, _, index) => {
+      const foundDigitKey = digitsKeys.find((digitKey) => {
+        return line.slice(index).startsWith(digitKey);
+      }); 
 
-  const linesWithCharacters: Array<Array<string>> = linesWithoutEmptyLines.map(line => {
-    return line
-      .replace("nine", "9e")
-      .replace("eight", "8t")
-      .replace("seven", "7n")
-      .replace("six", "6x")
-      .replace("five", "5e")
-      .replace("four", "4r")
-      .replace("three", "3e")
-      .replace("two", "2o")
-      .replace("one", "1e")
-      .split("");
-  });
+      if (foundDigitKey) {
+        const digit = digitsMap[foundDigitKey];
 
-  const linesWithNumbers: Array<Array<number>> = linesWithCharacters.map(lineWithCharacters => {
-    return lineWithCharacters.map(character => {
-      return parseInt(character, 10);
-    }).filter(number => {
-      return !Number.isNaN(number);
-    });
-  });
+        return [
+          ...digits,
+          digit
+        ];
+      }
 
-  const linesWithCalibration: Array<number> = linesWithNumbers.map(lineWithNumbers => {
-    const firstNumber: number | undefined = lineWithNumbers.at(0);
-    const lastNumber: number | undefined = lineWithNumbers.at(-1);
+      return digits;
+    }, initialDigits);
+  }).map((digits) => {
+    const firstDigit = digits.at(0);
+    const lastDigit = digits.at(-1);
 
-    if (typeof firstNumber === "undefined") {
+    if (!firstDigit) {
       return 0;
     }
 
-    if (typeof lastNumber === "undefined") {
-      return parseIntOr(0, `${firstNumber}`.repeat(2));
+    if (!lastDigit) {
+      return firstDigit;
     }
 
-    return parseIntOr(0, `${firstNumber}${lastNumber}`);
-  });
-
-  const solution: number = linesWithCalibration.reduce((sum, calibration) => {
-    return sum + calibration;
+    return parseInt(`${firstDigit}${lastDigit}`);
+  }).reduce((sum, digit) => {
+    return sum + digit
   }, 0);
 
   console.log(solution);
 };
 
 main().catch(error => {
-  if (error instanceof Error) {
-    console.error(error.message);
-  } else {
-    console.error(String(error));
-  }
+  console.error(`An error occurred: ${error}`);
 });
