@@ -29,7 +29,7 @@ const main = async () => {
 
   const initialCardsWinningCount: Record<number, number> = {};
 
-  const solution = buffer.toString().split("\n").filter(Boolean).reduce((previousCardsWinningCount, line, lineIndex) => {
+  const scratchcards = buffer.toString().split("\n").filter(Boolean).reduce((previousCardsWinningCount, line, lineIndex) => {
     const cardIdentifier = lineIndex + 1;
     const [, winningPlayedCharacters] = line.split(": ").filter(Boolean);
     const [winningLine, playedLine] = winningPlayedCharacters.split(" | ").filter(Boolean);
@@ -49,10 +49,6 @@ const main = async () => {
       return winningNumbers.includes(playedNumber);
     });
 
-    if (playedWinningNumbers.length === 0) {
-      return previousCardsWinningCount;
-    }
-
     const cardWinningCount = (previousCardsWinningCount[cardIdentifier] ?? 0) + 1;
 
     const initialNextCardsWinningCount = {
@@ -68,7 +64,11 @@ const main = async () => {
         [nextCardIdentifier]: (nextCardsWinningCount[nextCardIdentifier] ?? 0) + 1 * cardWinningCount
       };
     }, initialNextCardsWinningCount);
-  }, initialCardsWinningCount);
+  }, initialCardsWinningCount)
+
+  const solution = Object.values(scratchcards).reduce((sum, count) => {
+    return sum + count;
+  }, 0);
 
   console.log(solution);
 }
