@@ -4,7 +4,7 @@
   "description": "Advent of code day 1 part 1",
   "version": "0.1.0",
   "scripts": {
-    "start": "tsx index.ts"
+    "test": "tsx index.ts"
   },
   "dependencies": {
     "tsx": "4.6.2"

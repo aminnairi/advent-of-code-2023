@@ -4,6 +4,6 @@
   "version": "0.1.0",
   "description": "Advent of code day 2 part 1",
   "scripts": {
-    "start": "npx tsx index.ts"
+    "test": "npx tsx index.ts"
   }
 }
