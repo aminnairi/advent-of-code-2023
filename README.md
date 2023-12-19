@@ -20,7 +20,7 @@ npm --workspace day2/part1 test input.txt
 Day | Part | Finished
 ---|---|---
 Day 1 | Part 1 | ✅
-Day 1 | Part 2 | ❌
+Day 1 | Part 2 | ✅
 Day 2 | Part 1 | ✅
 Day 2 | Part 2 | ✅
 
